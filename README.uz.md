@@ -12,41 +12,41 @@
 
 
 ![Namoyish](screenshots/demo.svg)
-LightRAG (graph-RAG serveri) ni AI agentning uzoq muddatli xotirasi sifatida ishlab chiqarishda joylashtirish boʻyicha qoʻllanma: oʻrnatish, modellarni sozlash, API naqshlari, tipik nosozliklar va yangilash tartiblari.
+LightRAG (graph-RAG server) ni AI agentning uzoq muddatli xotirasi sifatida productionda yuritish boʻyicha qoʻllanma: oʻrnatish, model sozlashlari, API bilan ishlash naqshlari, tez-tez uchraydigan nosozliklar va yangilash tartibi.
 
 ## Arxitektura
 
 ```
-AI Agent ──▶ LightRAG Serveri (9621-port)
+AI Agent ──▶ LightRAG serveri (9621-port)
                 ├── Graf saqlash (NetworkX)
                 ├── Vektor saqlash (NanoVectorDB)
                 └── LLM + embedding (OpenAI-mos proxy orqali)
 ```
 
-## Ishlab chiqarishdan asosiy saboqlar
+## Productiondan olingan asosiy saboqlar
 
-### 1. Versiya yangilanishi deadlock ni tuzatishi mumkin
-LightRAG v1.4.16 da konveyer deadlock mavjud edi: asinxron qulf oqishlari tufayli yuklash osilib qolardi, `pipeline_busy` abadiy `true` holatida qolib ketardi. v1.5.7 ga yangilash uni toʻliq tuzatdi.
+### 1. Versiya yangilash deadlockni hal qilishi mumkin
+LightRAG 1.4.16 versiyasida pipeline deadlock bor edi: ingest asinxron qulflar oqishi tufayli osilib qolardi, `pipeline_busy` abadiy `true` boʻlib qolaverardi. 1.5.7 ga oʻtgandan keyin muammo butunlay yoʻqoldi.
 
-### 2. Versiyalar orasidagi API oʻzgarishlari
+### 2. Versiyalar orasida API oʻzgaradi
 | Versiya | Hujjatlar roʻyxati | Hujjatni oʻchirish |
 |---------|---------------|-----------------|
 | 1.4.x | `GET /documents` | `POST /documents/delete_document` |
-| 1.5.x | `POST /documents/paginated` | `DELETE /documents/delete_document` bilan `{"doc_ids": [...]}` |
+| 1.5.x | `POST /documents/paginated` | `DELETE /documents/delete_document`, `{"doc_ids": [...]}` bilan |
 
-### 3. Soʻrov rejimlari muhim
-- `mix`: katta indekslangan korpus bilan umumiy soʻrovlar uchun eng yaxshisi
-- `local`: qisqa/bitta boʻlakli hujjatlar uchun yaxshiroq (mix bular uchun boʻsh qaytaradi!)
-- `naive`: oddiy vektor qidiruv, grafsiz — har doim biror narsa qaytaradi
+### 3. Soʻrov rejimi muhim
+- `mix`: katta indekslangan korpusdagi umumiy soʻrovlar uchun eng yaxshisi
+- `local`: qisqa, bir boʻlakli hujjatlar uchun yaxshiroq (mix bunday hujjatlarga boʻsh natija qaytaradi!)
+- `naive`: grafsiz oddiy vektor qidiruv — har doim biror narsa topadi
 
-### 4. Embedding modellari mosligi
-Embedding modelini almashtirish vektor oʻlchamlari mosligini tekshirishni talab qiladi. Bir xil oʻlchov ≠ moslik — turli modellarning vektorlari turli fazolarda yashaydi.
+### 4. Embedding modeli mosligi
+Embedding modelini almashtirishda vektor oʻlchamining mosligini tekshiring. Oʻlchami bir xil boʻlishi moslikni kafolatlamaydi — har xil modelning vektorlari turli fazoda yashaydi.
 
 ## Oʻrnatish
 
 ```bash
 pip install lightrag-hku==1.5.7
-# .env faylini LLM_BINDING_HOST, EMBEDDING_BINDING_HOST bilan sozlang
+# .env fayliga LLM_BINDING_HOST, EMBEDDING_BINDING_HOST ni yozing
 # Serverni ishga tushiring
 lightrag-server --host 0.0.0.0 --port 9621
 ```
@@ -54,7 +54,7 @@ lightrag-server --host 0.0.0.0 --port 9621
 ## API qisqa maʼlumotnoma
 
 ```bash
-# Hujjat kiritish (fon rejimida qayta ishlash)
+# Hujjat kiritish (fon rejimida qayta ishlanadi)
 curl -X POST http://localhost:9621/documents/text \
   -H "Content-Type: application/json" \
   -d '{"text": "your fact here", "file_source": "my-source"}'
@@ -64,7 +64,7 @@ curl -X POST http://localhost:9621/query \
   -H "Content-Type: application/json" \
   -d '{"query": "your question", "mode": "local", "top_k": 20}'
 
-# Hujjatlar holatini tekshirish
+# Hujjatlar holatini koʻrish
 curl -X POST http://localhost:9621/documents/paginated \
   -H "Content-Type: application/json" -d '{}'
 
@@ -77,7 +77,7 @@ MIT
 
 ## 📬 Aloqa
 
-Savollaringiz bormi? Yozing: **[allumaxmail@gmail.com](mailto:allumaxmail@gmail.com)**
+Savol boʻlsa yozing: **[allumaxmail@gmail.com](mailto:allumaxmail@gmail.com)**
 
 ---
 
