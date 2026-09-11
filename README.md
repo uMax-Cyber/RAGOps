@@ -1,6 +1,10 @@
+[English](README.md) | [Русский](README.ru.md)
+
 # LightRAG Operations Guide
 [![CI](https://github.com/uMax-Cyber/RAGOps/actions/workflows/ci.yml/badge.svg)](https://github.com/uMax-Cyber/RAGOps/actions/workflows/ci.yml)
 
+
+![Demo](screenshots/demo.svg)
 Production deployment guide for LightRAG (graph-RAG server) as an AI agent's long-term memory: installation, model configuration, API patterns, common failures, and upgrade procedures.
 
 ## Architecture
