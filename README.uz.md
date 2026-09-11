@@ -4,7 +4,7 @@
 
 </div>
 
-# RAGOps — LightRAG Operatsiyalari
+# RAGOps — Эксплуатация LightRAG
 
 LightRAG production: deploy, API patternlar, deadlock tuzatish, versiya yangilash.
 
@@ -12,5 +12,14 @@ LightRAG production: deploy, API patternlar, deadlock tuzatish, versiya yangilas
 
 ![Namoyish](screenshots/demo.svg)
 
-## Litsenziya
-MIT
+## 📬 Aloqa
+
+Savollar bormi? Yozing: **[allumaxmail@gmail.com](mailto:allumaxmail@gmail.com)**
+
+---
+
+<div align="center">
+
+**🇬🇧 [English](README.md) · 🇷🇺 [Русский](README.ru.md) · 🇺🇿 [Oʻzbekcha](README.uz.md)**
+
+</div>
